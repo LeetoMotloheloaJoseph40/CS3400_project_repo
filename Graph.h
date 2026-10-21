@@ -28,6 +28,8 @@ private:
 public:
     Graph(int initialCapacity = 10);
     ~Graph();
+    Graph(const Graph&) = delete;                         // copying would double-delete edges
+    Graph& operator=(const Graph&) = delete;
 
     bool addStop(const string& name);                                   // false if duplicate
     bool addConnection(const string& a, const string& b, double dist);  // false if unknown stop or already connected

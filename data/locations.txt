@@ -1,0 +1,19 @@
+STOP|Main Gate
+STOP|Library
+STOP|Administration
+STOP|Science Block
+STOP|Student Centre
+STOP|Cafeteria
+STOP|Sports Complex
+STOP|Hostels
+STOP|Remote Farm
+EDGE|Main Gate|Administration|0.4
+EDGE|Main Gate|Library|0.6
+EDGE|Administration|Library|0.3
+EDGE|Library|Science Block|0.5
+EDGE|Administration|Student Centre|0.5
+EDGE|Student Centre|Cafeteria|0.2
+EDGE|Science Block|Cafeteria|0.4
+EDGE|Cafeteria|Hostels|0.7
+EDGE|Student Centre|Sports Complex|0.8
+EDGE|Hostels|Sports Complex|0.5
