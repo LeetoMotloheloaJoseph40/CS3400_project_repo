@@ -18,7 +18,7 @@ void VehicleTree::destroy(TreeNode* node) {
     delete node;
 }
 
-// insert
+// ---------- INSERT ----------
 TreeNode* VehicleTree::insertRec(TreeNode* node, const Vehicle& v, bool& inserted) {
     if (node == NULL) {                 // found the empty spot
         inserted = true;
@@ -40,7 +40,7 @@ bool VehicleTree::insert(const Vehicle& v) {
     return inserted;
 }
 
-// search
+// ---------- SEARCH ----------
 TreeNode* VehicleTree::searchRec(TreeNode* node, const string& id) const {
     if (node == NULL || node->data.getID() == id)
         return node;
@@ -55,7 +55,7 @@ Vehicle* VehicleTree::search(const string& id) const {
     return &found->data;
 }
 
-// traversing 
+// ---------- TRAVERSALS ----------
 void VehicleTree::inorderRec(TreeNode* node) const {
     if (node == NULL) return;
     inorderRec(node->left);
@@ -99,7 +99,7 @@ void VehicleTree::levelOrder() const {
     delete[] queue;
 }
 
-// remove
+// ---------- REMOVE ----------
 TreeNode* VehicleTree::findMin(TreeNode* node) const {
     while (node->left != NULL)
         node = node->left;
@@ -141,7 +141,7 @@ bool VehicleTree::remove(const string& id) {
     return removed;
 }
 
-// info
+// ---------- INFO ----------
 int VehicleTree::heightRec(TreeNode* node) const {
     if (node == NULL) return 0;
     int l = heightRec(node->left);

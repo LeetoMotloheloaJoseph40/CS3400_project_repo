@@ -33,6 +33,8 @@ private:
 public:
     VehicleTree();
     ~VehicleTree();
+    VehicleTree(const VehicleTree&) = delete;             // copying would double-delete nodes
+    VehicleTree& operator=(const VehicleTree&) = delete;
 
     bool     insert(const Vehicle& v);          // false if ID already exists
     Vehicle* search(const string& id) const;    // NULL if not found

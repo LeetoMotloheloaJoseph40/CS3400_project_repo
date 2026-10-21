@@ -46,7 +46,7 @@ void Graph::grow() {
     capacity = newCap;
 }
 
-// building the map 
+// ---------- building the map ----------
 int Graph::indexOf(const string& name) const {
     for (int i = 0; i < numStops; i++)
         if (stops[i] == name) return i;
@@ -149,7 +149,7 @@ void Graph::dfs(const string& start) const {
     delete[] visited;
 }
 
-// reachability and components 
+// ---------- reachability and components ----------
 // BFS that marks everything reachable from start; returns how many.
 int Graph::componentSize(int start, bool* visited) const {
     int* queue = new int[numStops];
@@ -285,5 +285,3 @@ void Graph::loadFromFile(const string& filename) {
             addConnection(f1, f2, atof(f3.c_str()));
     }
 }
-
-//Mokotso
