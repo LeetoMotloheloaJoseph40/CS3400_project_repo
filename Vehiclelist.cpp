@@ -39,40 +39,56 @@ bool Vehiclelist::insertEnd(const Vehicle& vehi){
 	size++;
 	return true;
 }
-Vehicle* Vehiclelist::toArray()const{
-	Vehicle* arr=new Vehicle[size];
-	Node* current=head;
-	int i=0;
-	while(current!=NULL){
-		arr[i++]=current->data;
-		current=current->next;
-	}
-	return arr;
+bool Vehiclelist::remove(const string& ID){
+	Node* cur = head;
+    Node* prev = NULL;
+    while (cur != NULL && cur->data.getID() != ID) {
+        prev = cur;
+        cur = cur->next;
+    }
+    if (cur == NULL) return false;
+    if (prev != NULL) prev->next = cur->next;
+    else head = cur->next;
+    if (cur == tail) tail = prev;
+    delete cur;
+    size--;
+    return true;
 }
-void Vehiclelist::saveToFile(const string& Vehicles)const{
-	ofstream out(Vehicles.c_str());
-	Node* current=head;
-	while(current!=NULL){
-		out<<current->data.getID()<<"|"<<current->data.getplate()<<"|"<<current->data.gettype()<<"|"<<current->data.getroute()<<"|"<<current->data.getCapacity()<<"|"<<current->data.getstatus()<<"\n";
-		current=current->next;
-	}
-	out.close();
+
+
+void Vehiclelist::display() const {
+    if (head == NULL) { cout << "No vehicles.\n"; return; }
+    for (Node* c = head; c != NULL; c = c->next)
+        c->data.display();
 }
-void Vehiclelist::loadFromFile(const string& Vehicles){
-	ifstream in(Vehicles.c_str());
-	if(!in) return;
-	string line;
-	while(getline(in,line)){
-		if(line=="") continue;
-		stringstream ss(line);
-		string ID,plate,type,route,Cap,status;
-		getline(ss,ID,'|');
-		getline(ss,plate,'|');
-		getline(ss,type,'|');
-		getline(ss,route,'|');
-		getline(ss,Cap,'|');
-		getline(ss,status,'|');
-		insertEnd(Vehicle(ID,plate,type,route,atoi(Cap.c_str()),status));
-	}
-	in.close();
+
+int Vehiclelist::getsize()const { return size; }
+bool Vehiclelist::isEmpty() const { return size == 0; }
+
+Vehicle* Vehiclelist::toArray()const {
+    Vehicle* arr = new Vehicle[size];
+    int i = 0;
+    for (Node* current = head; current != NULL; current = current->next)
+        arr[i++] = current->data;
+    return arr;
+}
+
+void Vehiclelist::saveToFile(const string& filename) const {
+    ofstream out(filename.c_str());
+    for (Node* c = head; c != NULL; c = c->next)
+        out << c->data.toLine() << "\n";
+    out.close();
+}
+
+void Vehiclelist::loadFromFile(const string& filename) {
+    ifstream in(filename.c_str());
+    if (!in) return;
+    string line;
+    while (getline(in, line)) {
+        if (line == "") continue;
+        Vehicle vehi;
+        vehi.fromLine(line);
+        insertEnd(vehi);
+    }
+    in.close();
 }
