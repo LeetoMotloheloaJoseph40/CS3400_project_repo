@@ -30,9 +30,9 @@ class Vehiclelist{
 		bool insertEnd(const Vehicle&);
 		bool remove(const string&);
 		Node* search(const string&);
-		void display();
-		int getsize();
-		bool isEmpty();
+		void display()const;
+		int getsize()const;
+		bool isEmpty()const;
 		Vehicle* toArray()const;
 		void saveToFile(const string&)const;
 		void loadFromFile(const string&);

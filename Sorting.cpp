@@ -1,52 +1,57 @@
 #include "Sorting.h"
 
-bool lessThan(const Vehicle& q,const Vehicle& r,int key){
-	if(key==1) return q.getID()<r.getID();
-	if(key==2) return q.getCapacity()<r.getCapacity();
-	if(key==3) return q.gettype()<r.gettype();
-	return q.getplate()<r.getplate();
+bool lessThan(const Vehicle& a, const Vehicle& b, int key) {
+    if (key == 1) return a.getID() < b.getID();
+    if (key == 2) return a.getCapacity() < b.getCapacity();
+    if (key == 3) return a.gettype() < b.gettype();
+    return a.getplate() < b.getplate();
 }
 
-void insertionSort(Vehicle q[],int T,int key){
-	for(int i=1;i<T;i++){
-		Vehicle temp=q[i];
-		int j=i-1;
-		while(j>=0&&lessThan(temp,q[j],key)){
-			q[j+1]=q[j];
-			j--;
-		}
-		q[j+1]=temp;
-	}
+void insertionSort(Vehicle a[], int n, int key) {
+    for (int i = 1; i < n; i++) {
+        Vehicle temp = a[i];
+        int j = i - 1;
+        while (j >= 0 && lessThan(temp, a[j], key)) {
+            a[j + 1] = a[j];
+            j--;
+        }
+        a[j + 1] = temp;
+    }
 }
-void merge(Vehicle q[],Vehicle temp[],int low,int moderate,int high,int key){
-	int i=low,j=moderate+1,k=low;
-	while(i<=moderate&&j<=high){
-		if(lessThan(q[j],q[i],key)) temp[k++]=q[j++];
-		else temp[k++]=q[i++];
-	}
-	while(i<=moderate) temp[k++]=q[i++];
-	while(j<=high) temp[k++]=q[j++];
-	for(int z=low;z<=high;z++) q[z]=temp[z];
+
+void mergeParts(Vehicle a[], Vehicle tmp[], int lo, int mid, int hi, int key) {
+    int i = lo, j = mid + 1, k = lo;
+    while (i <= mid && j <= hi) {
+        if (lessThan(a[j], a[i], key)) tmp[k++] = a[j++];
+        else tmp[k++] = a[i++];
+    }
+    while (i <= mid) tmp[k++] = a[i++];
+    while (j <= hi) tmp[k++] = a[j++];
+    for (int x = lo; x <= hi; x++) a[x] = tmp[x];
 }
-void merger(Vehicle q[],Vehicle temp[],int low,int high,int key){
-	if(low>=high) return;
-	int moderate=(low+high)/2;
-	merger(q,temp,low,moderate,key);
-	merger(q,temp,moderate+1,high,key);
-	merge(q,temp,low,moderate,high,key);
+
+void merger(Vehicle a[], Vehicle tmp[], int lo, int hi, int key) {
+    if (lo >= hi) return;
+    int mid = (lo + hi) / 2;
+    merger(a, tmp, lo, mid, key);
+    merger(a, tmp, mid + 1, hi, key);
+    mergeParts(a, tmp, lo, mid, hi, key);
 }
-void mergeSort(Vehicle q[],int T,int key){
-	Vehicle* temp=new Vehicle[T];
-	merger(q,temp,0,T-1,key);
-	delete[] temp;
+
+void mergeSort(Vehicle a[], int n, int key) {
+    if (n < 2) return;
+    Vehicle* tmp = new Vehicle[n];
+    merger(a, tmp, 0, n - 1, key);
+    delete[] tmp;
 }
-int binarysearch(Vehicle q[],int T,const string& id){
-	int low=0,high=T-1;
-	while(low<=high){
-		int moderate=(low+high)/2;
-		if(q[moderate].getID()==id) return moderate;
-		if(q[moderate].getID()<id) low=moderate+1;
-		else high=moderate-1;
-	}
-	return -1;
+
+int binarysearch(Vehicle q[], int T, const string& id) {
+    int lo = 0, hi = T - 1;
+    while (lo <= hi) {
+        int mid = (lo + hi) / 2;
+        if (q[mid].getID() == id) return mid;
+        if (q[mid].getID() < id) lo = mid + 1;
+        else hi = mid - 1;
+    }
+    return -1;
 }
