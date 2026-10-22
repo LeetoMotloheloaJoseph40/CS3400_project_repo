@@ -26,6 +26,7 @@ class Vehiclelist{
 		~Vehiclelist();
 		Vehiclelist(const Vehiclelist&)=delete;
 		Vehiclelist& operator=(const Vehiclelist&)=delete;
+		bool exists(const string& id) const;
 		bool insertFront(const Vehicle&);
 		bool insertEnd(const Vehicle&);
 		bool remove(const string&);

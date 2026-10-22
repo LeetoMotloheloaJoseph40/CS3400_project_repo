@@ -17,6 +17,14 @@ Node* Vehiclelist::search(const string& id){
 		if(current->data.getID()==id) return current;
 	return NULL;	
 }
+bool Vehiclelist::exists(const string& id) const {
+    Node* current = head;
+    while (current != NULL) {
+        if (current->data.getID() == id) return true;
+        current = current->next;
+    }
+    return false;
+}
 
 bool Vehiclelist::insertFront(const Vehicle& vehi){
 	if(search(vehi.getID())) return false;
